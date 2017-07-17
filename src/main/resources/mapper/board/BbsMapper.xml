@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navercorp.board.Repository.BbsRepository">
+
+	<resultMap type="bbs" id="bbsResultMap">
+		<id property="bbsId" column="bbs_id"/>
+		<result property="bbsNm" column="bbs_nm"/>
+		<result property="crerId" column="crer_id"/>
+		<result property="crerYmdt" column="crer_ymdt"/>
+		<result property="modrId" column="modr_id"/>
+		<result property="modYmdt" column="mod_ymdt"/>
+	</resultMap>
+
+	<select id="selectBbsList" resultMap="bbsResultMap" parameterType="bbs">
+		SELECT
+			bbs_id, bbs_nm, crer_id, crer_ymdt, modr_id, mod_ymdt
+		FROM
+			bbs
+		<where>
+			<if test="@org.springframework.util.StringUtils@hasText(bbsId)">
+				bbs_is = #{bbsId}
+			</if>
+		</where>
+	</select>
+
+</mapper>

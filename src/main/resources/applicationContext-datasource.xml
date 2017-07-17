@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- DataSource Configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="#{jdbcprop['jdbc.driverClassName']}"/>
+		<property name="url" value="#{jdbcprop['jdbc.url']}"/>
+		<property name="username" value="#{jdbcprop['jdbc.username']}"/>
+		<property name="password" value="#{jdbcprop['jdbc.password']}"/>
+
+        <!-- 아래 4개의 설정은 가능한 동일하게 설정하는 것이 장애상황시의 예외 케이스를 줄일수 있다.
+         	설정 참고: http://d2.naver.com/helloworld/5102792 -->
+		<property name="initialSize" value="5"/>
+		<property name="maxTotal" value="5"/>
+        <property name="maxIdle" value="5"/>
+		<property name="minIdle" value="5"/>
+
+        <!-- pool이 고갈되었을 경우 최대 대기 타임 ms -->
+		<property name="maxWaitMillis" value="1000"/>
+
+        <!-- evictor 설정 샘플 -->
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
+        <property name="numTestsPerEvictionRun" value="5"/>
+        <property name="minEvictableIdleTimeMillis" value="-1"/>
+        <property name="validationQuery" value="SELECT 0 FROM DUAL"/>
+
+        <!-- preparedStatement cache 사용여부 -->
+        <property name="poolPreparedStatements" value="true"/>
+       	<!-- preparedStatement cache 를 얼마나할지 설정. -->
+		<property name="maxOpenPreparedStatements" value="50"/>
+	</bean>
+	
+</beans>

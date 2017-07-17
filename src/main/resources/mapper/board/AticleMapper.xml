@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navercorp.board.Repository.ArticleRepository">
+
+	<resultMap type="atc" id="atcListResultMap">
+		<id property="seq" column="seq"/>
+		<result property="bbsId" column="bbs_id"/>
+		<result property="ttl" column="ttl"/>
+		<result property="cont" column="cont"/>
+		<result property="wrtrId" column="wrtr_id"/>
+		<result property="wrtYmdt" column="wrt_ymdt"/>
+		<result property="modYmdt" column="mod_ymdt"/>
+		<result property="cnt" column="cnt"/>
+		<collection property="comments" column="atcSeq=seq" select="com.navercorp.board.Repository.CommentRepository.selectCommentList"/>
+	</resultMap>
+
+	<select id="selectAticleList" resultMap="atcListResultMap" parameterType="atc">
+		SELECT
+			seq, bbs_id, ttl, cont, wrtr_id, wrt_ymdt, mod_ymdt, cnt
+		FROM
+			atc
+		<where>
+			<if test="@org.springframework.util.StringUtils@hasText(bbsId)">
+				bbs_id = #{bbsId}
+			</if>
+		</where>
+	</select>
+
+</mapper>

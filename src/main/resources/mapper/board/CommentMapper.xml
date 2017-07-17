@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navercorp.board.Repository.CommentRepository">
+
+	<resultMap type="cmt" id="cmtListResultMap">
+		<id property="seq" column="seq"/>
+		<result property="atcSeq" column="bbs_id"/>
+		<result property="cont" column="cont"/>
+		<result property="wrtrId" column="wrtr_id"/>
+		<result property="wrtYmdt" column="wrt_ymdt"/>
+	</resultMap>
+
+	<select id="selectCommentList" resultMap="cmtListResultMap" parameterType="cmt">
+		SELECT
+			seq, atc_seq, cont, wrtr_id, wrt_ymdt
+		FROM
+			cmt
+		WHERE
+			atc_seq = #{atcSeq}
+	</select>
+
+</mapper>
